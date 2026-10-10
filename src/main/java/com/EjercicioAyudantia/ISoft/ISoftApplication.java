@@ -3,7 +3,7 @@ package com.EjercicioAyudantia.ISoft;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.EjercicioAyudantia")
 public class ISoftApplication {
 
 	public static void main(String[] args) {
