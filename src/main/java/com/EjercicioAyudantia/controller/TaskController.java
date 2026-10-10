@@ -6,6 +6,7 @@ import com.EjercicioAyudantia.repository.TareaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -19,6 +20,18 @@ public class TaskController {
     public TaskController(TareaRepository repository) {
         this.repository = repository;
     }
+
+    @GetMapping
+    public List<Tarea> getTasks(@RequestParam(required = false) String prioridad,
+                                @RequestParam(required = false) String titulo,
+                                @RequestParam(required = false) String fechaLimite) {
+        return repository.findAll().stream()
+                .filter(t -> prioridad == null || prioridad.equalsIgnoreCase(t.prioridad()))
+                .filter(t -> titulo == null || t.titulo().toLowerCase().contains(titulo.toLowerCase()))
+                .filter(t -> fechaLimite == null || fechaLimite.equals(t.fechaLimite()))
+                .toList();
+    }
+
 
     @PostMapping
     public ResponseEntity<Tarea> createTask(@RequestBody CreateTaskRequest request) {
